@@ -12,3 +12,17 @@ for file_name, type in vim.fs.dir(plugins_dir, { follow = true }) do
     require('custom.plugins.' .. module)
   end
 end
+
+vim.opt.clipboard = 'unnamedplus'
+
+if vim.g.neovide then
+  vim.keymap.set('v', '<C-c>', '"+y')
+  vim.keymap.set({ 'n', 'i', 'v', 'c', 't' }, '<C-v>',
+    function()
+      vim.api.nvim_paste(vim.fn.getreg('+'), true, -1)
+    end)
+end
+
+vim.keymap.set({ 'n', 'i', 'v', 's', 'x' }, '<C-s>', '<cmd>w<CR>', {
+  desc = 'Save file',
+})
